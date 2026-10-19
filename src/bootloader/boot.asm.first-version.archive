@@ -1,0 +1,44 @@
+[bits 16]
+[ORG 0x7C00]
+
+call start
+
+start:
+    cli
+    xor ax, ax
+    mov ds, ax
+    mov es, ax
+    mov ss, ax
+    mov sp, 0x7c00
+
+    mov ax, 0x0003
+    int 0x10
+
+    mov si, msg_welcome
+    call print_string_16
+
+    lgdt [gdt_descriptor]
+
+    mov eax, cr0
+    or eax, 0x1
+    mov cr0, eax
+
+    jmp 0x08:init_pm
+
+print_string_16:
+    lodsb
+    or al, al
+    jz .done
+    mov ah, 0x0e
+    int 0x10
+    jmp print_string_16
+.done:
+    ret
+
+msg_welcome: db "Loading system...", 13, 10, 0
+
+%include "Psycosomathics/src/bootloader/gdt.asm"
+%include "Psycosomathics/src/bootloader/pmode.asm"
+
+times 510 - ($ - $$) db 0x00
+dw 0xAA55

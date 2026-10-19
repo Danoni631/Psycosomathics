@@ -1,0 +1,34 @@
+[bits 32]
+;[ORG 0x1000]
+
+kernel_main:
+    mov ax, 0x10
+    mov ds, ax
+    mov ss, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+
+    mov edi, 0xb8000
+    mov ecx, 2000
+    mov ax, 0x1f20
+    rep stosw
+
+    mov edi, 0xb8000 + (160 * 24)
+    mov ecx, 80
+    mov ax, 0x7020       
+    rep stosw
+
+    mov esi, msg_start_btn
+    mov edi, 0xb8000 + (160 * 24)
+    mov ah, 0x71
+
+    ;call InitMouse
+    ;call EnableMouse
+
+%include "Psycosomathics/src/interface/gui.asm"
+;%include "Psycosomathics/src/kernel/drivers/mouse.asm"
+;%include "Psycosomathics/src/kernel/drivers/cursor.asm"
+%include "Psycosomathics/src/kernel/data.asm"
+
+;times 4096 - ($ - $$) db 0

@@ -1,0 +1,18 @@
+nasm -f bin "Psycosomathics/src/bootloader/boot.asm" -o "Psycosomathics/builds/v00001.img"
+nasm -f bin "Psycosomathics/src/bootloader/boot.asm" -o "Psycosomathics/builds/v00002.img"
+nasm -f bin "Psycosomathics/src/bootloader/boot.asm" -o "Psycosomathics/builds/v00003.img"
+nasm -f bin "Psycosomathics/src/bootloader/boot.asm" -o "Psycosomathics/builds/v00004.img"
+nasm -f bin "Psycosomathics/src/bootloader/boot.asm" -o "Psycosomathics/builds/v00005.img"
+nasm -f bin "Psycosomathics/src/bootloader/boot.asm" -o "Psycosomathics/builds/v00006.img"
+nasm -f bin "Psycosomathics/src/kernel/other-kernel.asm" -o "Psycosomathics/builds/v00006s.img"
+nasm -f bin "Psycosomathics/src/bootloader/boot.asm" -o "Psycosomathics/builds/v00006c.img"
+
+nasm -f bin "Psycosomathics/src/bootloader/boot.asm" -o "Psycosomathics/bin/boot.bin"
+nasm -f bin "Psycosomathics/src/kernel/kernel.asm" -o "Psycosomathics/bin/kernel.bin"
+
+cd Psycosomathics
+cd bin
+copy boot.bin + kernel.bin v00007.img
+
+cd ".."
+cd ".."

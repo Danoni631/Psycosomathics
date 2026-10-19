@@ -1,0 +1,31 @@
+[bits 32]
+init_pm:
+    ; Configura os seletores de dados para o segmento de dados plano (0x10)
+    mov ax, 0x10
+    mov ds, ax
+    mov ss, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+
+    mov edi, 0xb8000
+    mov esi, msg_pm
+    mov ah, 0x1f 
+    call kernel_main
+
+.print_loop:
+    lodsb
+    test al, al
+    jz .halt
+    mov [edi], ax
+    add edi, 2
+    jmp .print_loop
+
+.halt:
+    cli
+    hlt
+    jmp $
+
+%include "Psycosomathics/src/kernel/kernel.asm"
+
+msg_pm: db "Psycosomathics: Protected Mode loaded with success", 0
